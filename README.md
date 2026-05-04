@@ -1,102 +1,174 @@
-# tlias-web-management
-
-一个基于 **Spring Boot + MyBatis + MySQL** 的部门管理示例项目，主要用于学习后端分层开发、REST 接口设计和数据库访问。
-
 ## 项目简介
 
-该项目当前实现了一个简单的部门查询接口，用于从 MySQL 数据库中读取部门信息并以统一响应格式返回。
+`tlias-web-management` 是一个课程/练手型 Web 后端项目，主要用于学习和实践：
+
+- Spring Boot Web 接口开发
+- MyBatis 数据持久化
+- MySQL 数据库交互
+- RESTful 风格接口设计
+- 统一返回结果封装
+- 分层架构设计（Controller / Service / Mapper / POJO）
+
+## 已完成内容
+
+### 部门管理
+
+已完成部门相关的基础 CRUD 接口：
+
+- 查询所有部门
+- 根据 ID 查询部门详情
+- 新增部门
+- 修改部门信息
+- 删除部门
+
+### 基础能力
+
+- 统一返回结果类 `Result`
+- 日志输出 `Slf4j`
+- MyBatis 驼峰命名映射配置
+- 新增/修改时自动补全 `createTime`、`updateTime`
+- 项目启动类与分层结构已搭建完成
+
+### 员工模块
+
+- 已创建员工管理相关 Controller、Service、Mapper、POJO 等基础文件
+- 后续可继续补充员工列表、分页查询、删除、编辑等接口
 
 ## 技术栈
 
 - Java 21
 - Spring Boot 4
 - Spring Web MVC
-- MyBatis
+- MyBatis 4
 - MySQL
 - Lombok
-
-## 项目功能
-
-- 查询所有部门列表
-- 使用统一响应对象返回数据
-- 采用 Controller / Service / Mapper 分层结构
 
 ## 项目结构
 
 ```text
-tlias-web-management/
-├── src/
-│   ├── main/
-│   │   ├── java/com/itluffy/
-│   │   │   ├── controller/   # 控制层
-│   │   │   ├── service/      # 业务层
-│   │   │   ├── mapper/       # 数据访问层
-│   │   │   └── pojo/         # 实体类与响应封装
-│   │   └── resources/
-│   │       └── application.yaml
-│   └── test/
-├── pom.xml
-└── README.md
+tlias-web-management
+├─ src/main/java/com/itluffy
+│  ├─ controller        # 控制层
+│  ├─ service           # 业务层
+│  ├─ service/impl      # 业务实现
+│  ├─ mapper            # MyBatis Mapper
+│  ├─ pojo              # 实体类 / 结果封装类
+│  └─ TliasWebManagementApplication.java
+├─ src/main/resources
+│  └─ application.yaml  # 项目配置
+└─ pom.xml
 ```
 
-## 接口说明
+## 运行环境
 
-### 查询所有部门
+- JDK 21
+- Maven 3.9+
+- MySQL 8+
+- IDEA / VS Code 任意一种开发工具
 
-- **请求方式**：`GET`
-- **请求地址**：`/depts`
-- **返回结果**：部门列表
+## 快速开始
 
-示例返回：
+### 1. 准备数据库
+
+请先创建名为 `tlias` 的数据库，并导入对应的表结构与测试数据。
+
+> 注意：仓库中的数据库连接信息仅适用于你本地环境，请根据实际情况修改 `src/main/resources/application.yaml`。
+
+### 2. 修改数据库配置
+
+在 `application.yaml` 中配置数据库连接信息：
+
+```yaml
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/tlias
+    username: root
+    password: your_password
+```
+
+### 3. 启动项目
+
+在项目根目录执行：
+
+```bash
+mvn spring-boot:run
+```
+
+或者直接运行启动类：
+
+```text
+com.itluffy.TliasWebManagementApplication
+```
+
+## 部门接口说明
+
+统一前缀：`/depts`
+
+### 1. 查询所有部门
+
+- `GET /depts`
+
+### 2. 根据 ID 查询部门
+
+- `GET /depts/{id}`
+
+### 3. 新增部门
+
+- `POST /depts`
+- 请求体示例：
+
+```json
+{
+  "name": "人事部"
+}
+```
+
+### 4. 修改部门
+
+- `PUT /depts`
+- 请求体示例：
+
+```json
+{
+  "id": 1,
+  "name": "市场部"
+}
+```
+
+### 5. 删除部门
+
+- `DELETE /depts?id=1`
+
+## 接口返回格式
+
+项目统一使用 `Result` 返回：
 
 ```json
 {
   "code": 1,
   "msg": "success",
-  "data": [
-    {
-      "id": 1,
-      "name": "人事部",
-      "createTime": "2026-05-02T10:00:00",
-      "updateTime": "2026-05-02T10:00:00"
-    }
-  ]
+  "data": []
 }
 ```
 
-## 本地运行环境
+- `code = 1` 表示成功
+- `code = 0` 表示失败
+- `data` 为返回数据
+- `msg` 为提示信息
 
-运行前请确保已安装并准备好：
+## 开发说明
 
-- JDK 21
-- Maven 3.9+
-- MySQL 8+
+- 新增部门时会自动补全 `createTime` 和 `updateTime`
+- 修改部门时会自动更新 `updateTime`
+- 数据库字段建议使用下划线命名，实体类使用驼峰命名
+- 项目当前已具备基础后端骨架，可继续扩展员工管理模块
 
-## 数据库配置
+## 后续可扩展功能
 
-项目默认连接本地 MySQL 数据库：
+- 员工列表分页查询
+- 员工新增 / 编辑 / 删除
+- 条件检索
+- 统一异常处理
+- 登录认证
+- 文件上传
 
-- 数据库名：`tlias`
-- 地址：`localhost:3306`
-
-请根据自己的环境修改 `src/main/resources/application.yaml` 中的数据库配置。
-
-## 启动步骤
-
-1. 创建数据库 `tlias`
-2. 导入部门表及测试数据
-3. 修改数据库连接配置
-4. 运行 Spring Boot 启动类 `TliasWebManagementApplication`
-5. 访问接口：
-
-```bash
-GET http://localhost:8080/depts
-```
-
-## 代码说明
-
-- `DeptController`：接收 HTTP 请求并返回统一结果
-- `DeptService` / `DeptServiceImpl`：处理业务逻辑
-- `DeptMapper`：通过 MyBatis 查询数据库
-- `Result`：统一响应封装
-- `Dept`：部门实体类
