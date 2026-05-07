@@ -4,6 +4,8 @@ import com.itluffy.pojo.Emp;
 import com.itluffy.pojo.EmpQueryParam;
 import com.itluffy.pojo.PageResult;
 
+import java.util.List;
+
 
 public interface EmpService {
 
@@ -23,4 +25,19 @@ public interface EmpService {
      * 新增员工
      * */
     void save(Emp emp);
+
+    /*
+     * 批量删除员工信息
+     * */
+    void delete(List<Integer> ids);
+
+    /*
+     * 根据ID查询员工基本信息
+     * */
+    Emp getInfo(Integer id);
+
+    /*
+     * 修改员工
+     * */
+    void update(Emp emp);
 }

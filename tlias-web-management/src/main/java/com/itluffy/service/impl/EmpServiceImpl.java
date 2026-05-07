@@ -10,10 +10,14 @@ import com.itluffy.pojo.EmpQueryParam;
 import com.itluffy.pojo.PageResult;
 import com.itluffy.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.parsing.EmptyReaderEventListener;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -85,11 +89,53 @@ public class EmpServiceImpl implements EmpService {
         empMapper.insert(emp);
         //2. 保存员工工作经历
         List<EmpExpr> exprList = emp.getExprList();
-        if (!CollectionUtils.isEmpty(exprList)){
+        if (!CollectionUtils.isEmpty(exprList)) {
             // 遍历集合, 为empId赋值
             exprList.forEach(empExpr -> {
                 empExpr.setEmpId(emp.getId());
             });
+            empExprMapper.insertBatch(exprList);
+        }
+    }
+
+
+    /*
+     * 批量删除员工
+     * */
+    @Transactional(rollbackFor = {Exception.class})
+    @Override
+    public void delete(List<Integer> ids) {
+        //1. 批量删除员工的基本信息
+        empMapper.deleteByIds(ids);
+
+        //2. 批量删除员工的工作经历信息
+        empExprMapper.deleteByEmpIds(ids);
+    }
+
+    /*
+     * 根据ID查询员工信息
+     * */
+    @Override
+    public Emp getInfo(Integer id) {
+        return empMapper.getById(id);
+    }
+
+    /*
+     * 修改员工
+     * */
+    @Transactional(rollbackFor = {Exception.class})
+    @Override
+    public void update(Emp emp) {
+        //1. 根据ID修改员工基本信息
+        emp.setUpdateTime(LocalDateTime.now());
+        empMapper.updateById(emp);
+        //2. 根据ID修改员工工作经历
+        //2.1 先删除(根据员工ID删除原有的工作经历)
+        empExprMapper.deleteByEmpIds(Collections.singletonList(emp.getId()));
+        //2.2 再添加这个员工新的工作经历
+        List<EmpExpr> exprList = emp.getExprList();
+        if (!CollectionUtils.isEmpty(exprList)){
+            exprList.forEach(empExpr -> empExpr.setEmpId(emp.getId()));
             empExprMapper.insertBatch(exprList);
         }
     }
