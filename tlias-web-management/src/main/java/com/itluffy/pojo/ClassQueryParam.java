@@ -1,0 +1,17 @@
+package com.itluffy.pojo;
+
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
+
+@Data
+public class ClassQueryParam {
+    private Integer page = 1;  //页码
+    private Integer pageSize = 10;  //每页展示的记录数
+    private String name;  //姓名
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate begin;  //入职时间-开始
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate end;  //入职时间-结束
+}

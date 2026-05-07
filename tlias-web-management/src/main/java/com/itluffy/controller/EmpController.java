@@ -36,9 +36,22 @@ public class EmpController {
 //        return Result.success(pageResult);
 //    }
 
+    /*
+     * 分页查询
+     * */
     @GetMapping
     public Result page(EmpQueryParam empQueryParam) {
         log.info("分页查询: {}", empQueryParam);
+        PageResult<Emp> pageResult = empService.page(empQueryParam);
+        return Result.success(pageResult);
+    }
+
+    /**
+     * 兼容前端旧版请求：/emps/list
+     */
+    @GetMapping("/list")
+    public Result list(EmpQueryParam empQueryParam) {
+        log.info("兼容分页查询: {}", empQueryParam);
         PageResult<Emp> pageResult = empService.page(empQueryParam);
         return Result.success(pageResult);
     }
@@ -66,7 +79,7 @@ public class EmpController {
     /*
      * 查询回显
      * */
-    @GetMapping("/{id}")
+    @GetMapping("/{id:\\d+}")
     public Result getInfo(@PathVariable Integer id) {
         log.info("根据ID查询员工信息: {}", id);
         Emp emp = empService.getInfo(id);
