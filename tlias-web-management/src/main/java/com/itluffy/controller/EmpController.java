@@ -79,7 +79,7 @@ public class EmpController {
     /*
      * 查询回显
      * */
-    @GetMapping("/{id:\\d+}")
+    @GetMapping("/{id}")
     public Result getInfo(@PathVariable Integer id) {
         log.info("根据ID查询员工信息: {}", id);
         Emp emp = empService.getInfo(id);

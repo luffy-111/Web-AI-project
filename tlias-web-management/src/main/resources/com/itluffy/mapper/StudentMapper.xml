@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itluffy.mapper.StudentMapper">
+
+    <select id="studentList" resultType="com.itluffy.pojo.Student">
+        select s.id,
+               s.name,
+               s.no,
+               s.gender,
+               s.phone,
+               s.id_card,
+               s.is_college,
+               s.address,
+               s.degree,
+               s.graduation_date,
+               s.clazz_id,
+               s.violation_count,
+               s.violation_score,
+               s.create_time,
+               s.update_time,
+               c.name as clazzName
+        from student s
+                 left join clazz c on s.clazz_id = c.id
+    </select>
+
+</mapper>
