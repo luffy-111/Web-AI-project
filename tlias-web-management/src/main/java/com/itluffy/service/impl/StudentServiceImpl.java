@@ -11,6 +11,7 @@ import com.itluffy.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -31,5 +32,51 @@ public class StudentServiceImpl implements StudentService {
         //3. 解析查询结果, 并封装
         Page<Student> p = (Page<Student>) studentList;
         return new PageResult<Student>(p.getTotal(), p.getResult());
+    }
+
+    /*
+     * 根据ID批量删除学生信息
+     * */
+    @Override
+    public void deleteStudentByIds(List<Integer> ids) {
+        studentMapper.deleteStudentByIds(ids);
+    }
+
+    /*
+     * 新增学生信息
+     * */
+    @Override
+    public void addStudent(Student student) {
+        //1. 补全基础信息
+        student.setViolationCount((short) 0);
+        student.setViolationScore((short) 0);
+        student.setCreateTime(LocalDateTime.now());
+        student.setUpdateTime(LocalDateTime.now());
+        //2. 调用Mapper接口
+        studentMapper.addStudent(student);
+    }
+
+    /*
+     * 根据ID查询学生信息
+     * */
+    @Override
+    public Student getStudentById(Integer id) {
+        return studentMapper.getStudentById(id);
+    }
+
+    /*
+     * 修改学生信息
+     * */
+    @Override
+    public void updateStudent(Student student) {
+        studentMapper.updateStudent(student);
+    }
+
+    /*
+     * 修改学生违纪扣分
+     * */
+    @Override
+    public void updateStudentViolationScore(Integer id, Integer score) {
+        studentMapper.updateStudentViolationScore(id, score);
     }
 }

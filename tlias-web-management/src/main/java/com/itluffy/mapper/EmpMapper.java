@@ -70,4 +70,16 @@ public interface EmpMapper {
      * */
     @MapKey("name")
     List<Map<String, Object>> countEmpGenderData();
+
+    /*
+     * 统计学生各学位人数
+     * */
+    @MapKey("degree")
+    List<Map<String, Object>> countStudentDegreeData();
+
+    /*
+     * 统计各班学生人数
+     * */
+    @MapKey("className")
+    List<Map<String, Object>> countStudentCountData();
 }

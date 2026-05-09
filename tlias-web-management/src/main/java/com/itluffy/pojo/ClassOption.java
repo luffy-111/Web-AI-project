@@ -9,8 +9,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class JobOption {  //Option: 选项
+public class ClassOption {
 
-    private List jobList;  // 职位列表
+    private List degreeList; // 班级列表
     private List dataList;  // 数据列表
 }

@@ -1,5 +1,6 @@
 package com.itluffy.controller;
 
+import com.itluffy.pojo.ClassOption;
 import com.itluffy.pojo.JobOption;
 import com.itluffy.pojo.Result;
 import com.itluffy.service.ReportService;
@@ -38,5 +39,25 @@ public class ReportComtroller {
         log.info("统计员工性别人数");
         List<Map<String, Object>> genderList = reportService.getEmpGenderData();
         return Result.success(genderList);
+    }
+
+    /*
+     * 统计学生各学位人数
+     * */
+    @GetMapping("/studentDegreeData")
+    public Result getStudentDegreeData() {
+        log.info("统计学生各学位人数");
+        List<Map<String, Object>> studentDegreeData = reportService.getStudentDegreeData();
+        return Result.success(studentDegreeData);
+    }
+
+    /*
+     * 统计各班级学生的人数
+     * */
+    @GetMapping("/studentCountData")
+    public Result getClassStudentData() {
+        log.info("统计各班级学生的人数");
+        ClassOption classOption = reportService.getStudentCountData();
+        return Result.success(classOption);
     }
 }

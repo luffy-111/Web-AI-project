@@ -93,6 +93,40 @@
         group by gender
     </select>
 
+    <!-- 统计学生各学历人数 -->
+    <select id="countStudentDegreeData" resultType="java.util.Map">
+        select case degree
+                   when 1 then '初中'
+                   when 2 then '高中'
+                   when 3 then '大专'
+                   when 4 then '本科'
+                   when 5 then '硕士'
+                   when 6 then '博士'
+                   else '其他' end as name,
+            count(*) as value
+        from student
+        group by degree
+        order by value
+    </select>
+    <select id="countStudentCountData" resultType="java.util.Map">
+        select case clazz_id
+                   when 1 then 'JavaEE就业163期'
+                   when 2 then '前端就业80期'
+                   when 3 then 'AI大模型开发2期'
+                   when 4 then '前端就业90期'
+                   when 5 then 'JavaEE就业165期'
+                   when 6 then 'JavaEE就业166期'
+                   when 7 then '大数据就业58期'
+                   when 8 then 'JavaEE就业167期'
+                   when 9 then 'JavaEE就业199期'
+                   when 10 then 'AI大模型开发'
+                   else '其他' end as className,
+               count(*) as num
+        from student
+        group by clazz_id
+        order by num
+    </select>
+
     <!--根据ID更新员工基本信息-->
     <!-- set标签: 会自动生成set标签, 会自动的删除多余的逗号 -->
     <update id="updateById">
