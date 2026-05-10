@@ -1,6 +1,6 @@
 # tlias-web-management
 
-`tlias-web-management` 是一个基于 Spring Boot + MyBatis 的教务/人事管理后端项目，当前已经完成主要业务模块开发，可直接作为 GitHub 展示项目、课程项目或后端练手项目使用。
+`tlias-web-management` 是一个基于 Spring Boot + MyBatis 的教务/人事管理后端项目，当前已经完成主要业务模块开发，可直接作为课程项目或后端练手项目使用。
 
 ## 项目简介
 
