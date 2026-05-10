@@ -82,4 +82,11 @@ public interface EmpMapper {
      * */
     @MapKey("className")
     List<Map<String, Object>> countStudentCountData();
+
+    /*
+     * 根据用户名和密码查询员工信息
+     * 登录操作
+     * */
+    @Select("select id, username, name from emp where username = #{username} and password = #{password}")
+    Emp getByUsernameAndPassword(Emp emp);
 }

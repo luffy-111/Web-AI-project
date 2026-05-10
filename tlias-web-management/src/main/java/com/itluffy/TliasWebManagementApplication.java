@@ -2,7 +2,9 @@ package com.itluffy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.server.servlet.context.ServletComponentScan;
 
+@ServletComponentScan  // 开启了Spring Boot对Servlet组件的扫描
 @SpringBootApplication
 public class TliasWebManagementApplication {
 

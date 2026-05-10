@@ -4,22 +4,20 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.itluffy.mapper.EmpExprMapper;
 import com.itluffy.mapper.EmpMapper;
-import com.itluffy.pojo.Emp;
-import com.itluffy.pojo.EmpExpr;
-import com.itluffy.pojo.EmpQueryParam;
-import com.itluffy.pojo.PageResult;
+import com.itluffy.pojo.*;
 import com.itluffy.service.EmpService;
+import com.itluffy.utils.JwtUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.parsing.EmptyReaderEventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 @Service
 public class EmpServiceImpl implements EmpService {
 
@@ -134,10 +132,27 @@ public class EmpServiceImpl implements EmpService {
         empExprMapper.deleteByEmpIds(Collections.singletonList(emp.getId()));
         //2.2 再添加这个员工新的工作经历
         List<EmpExpr> exprList = emp.getExprList();
-        if (!CollectionUtils.isEmpty(exprList)){
+        if (!CollectionUtils.isEmpty(exprList)) {
             exprList.forEach(empExpr -> empExpr.setEmpId(emp.getId()));
             empExprMapper.insertBatch(exprList);
         }
+    }
+
+    /*
+     * 员工登录
+     * */
+    @Override
+    public LoginUser login(Emp emp) {
+        //1. 根据用户名查询员工信息
+        Emp e = empMapper.getByUsernameAndPassword(emp);
+        //2. 判断员工是否存在
+        if (e != null) {
+            log.info("员工登录: {}", e);
+            // 生成JWT令牌
+            String token = JwtUtils.generateJwt(Collections.singletonMap("id", e.getId()));
+            return new LoginUser(e.getId(), e.getUsername(), e.getName(), token);
+        }
+        return null;
     }
 
 }

@@ -2,6 +2,7 @@ package com.itluffy.service;
 
 import com.itluffy.pojo.Emp;
 import com.itluffy.pojo.EmpQueryParam;
+import com.itluffy.pojo.LoginUser;
 import com.itluffy.pojo.PageResult;
 
 import java.util.List;
@@ -40,4 +41,9 @@ public interface EmpService {
      * 修改员工
      * */
     void update(Emp emp);
+
+    /*
+     * 员工登录
+     * */
+    LoginUser login(Emp emp);
 }
