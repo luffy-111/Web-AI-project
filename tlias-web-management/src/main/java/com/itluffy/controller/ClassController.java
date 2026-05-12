@@ -1,5 +1,6 @@
 package com.itluffy.controller;
 
+import com.itluffy.anno.Log;
 import com.itluffy.pojo.*;
 import com.itluffy.service.ClassService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,7 @@ public class ClassController {
     /*
      * 根据ID删除班级信息
      * */
+    @Log
     @DeleteMapping("/{id}")
     public Result deleteClassById(@PathVariable Integer id) {
         log.info("根据ID删除班级: {}", id);
@@ -37,6 +39,7 @@ public class ClassController {
     /*
      * 新增班级
      * */
+    @Log
     @PostMapping
     public Result addClass(@RequestBody Clazz clazz) {
         log.info("新增班级: {}", clazz);
@@ -57,6 +60,7 @@ public class ClassController {
     /*
      * 修改班级
      * */
+    @Log
     @PutMapping
     public Result updateClass(@RequestBody Clazz clazz) {
         log.info("修改班级: {}", clazz);

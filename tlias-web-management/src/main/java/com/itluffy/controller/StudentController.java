@@ -1,5 +1,6 @@
 package com.itluffy.controller;
 
+import com.itluffy.anno.Log;
 import com.itluffy.pojo.*;
 import com.itluffy.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ public class StudentController {
     /*
      * 根据ID批量删除学生信息
      * */
+    @Log
     @DeleteMapping("/{ids}")
     public Result deleteStudentByIds(@PathVariable List<Integer> ids) {
         log.info("根据ID批量删除学生: {}", ids);
@@ -39,6 +41,7 @@ public class StudentController {
     /*
      * 新增学生信息
      * */
+    @Log
     @PostMapping
     public Result addStudent(@RequestBody Student student) {
         log.info("新增学生: {}", student);
@@ -59,6 +62,7 @@ public class StudentController {
     /*
      * 修改学生信息
      * */
+    @Log
     @PutMapping
     public Result updateStudent(@RequestBody Student student) {
         log.info("修改学生: {}", student);
@@ -69,6 +73,7 @@ public class StudentController {
     /*
      * 根据ID修改学生的违纪扣分
      * */
+    @Log
     @PutMapping("/violation/{id}/{score}")
     public Result updateStudentViolationScore(@PathVariable Integer id, @PathVariable Integer score) {
         log.info("根据ID修改学生违纪扣分: {}", id);

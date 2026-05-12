@@ -1,5 +1,6 @@
 package com.itluffy.controller;
 
+import com.itluffy.anno.Log;
 import com.itluffy.pojo.Dept;
 import com.itluffy.pojo.Result;
 import com.itluffy.service.DeptService;
@@ -45,6 +46,7 @@ public class DeptController {
     /*
      * 删除部门  方式三: 省略@RequestParam(前端传递的请求参数名与服务器方法形参名一致)
      * */
+    @Log
     @DeleteMapping
     public Result delete(Integer id) {
 //        System.out.println("根据ID删除部门: " + id);
@@ -56,6 +58,7 @@ public class DeptController {
     /*
      * 新增部门
      * */
+    @Log
     @PostMapping
     public Result add(@RequestBody Dept dept) {
 //        System.out.println("新增部门");
@@ -79,6 +82,7 @@ public class DeptController {
     /*
      * 修改部门数据
      * */
+    @Log
     @PutMapping
     public Result update(@RequestBody Dept dept) {
 //        System.out.println("修改部门" + dept);
